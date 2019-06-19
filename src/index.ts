@@ -115,15 +115,15 @@ export default class WiZLocalControl {
   }
 
   /**
-   * Switches WiZ Light to demo mode
+   * Changes module name for WiZ Light
    * @param moduleName module name
    * @param lightIp Light IP address
    */
-  async switchToDemoMode(
+  async setModuleName(
     moduleName: string,
     lightIp: string,
   ): Promise<Result<any>> {
-    const msg = SetSystemConfigMessage.buildSwitchToDemoModeMessage(moduleName);
+    const msg = SetSystemConfigMessage.buildSetModuleNameMessage(moduleName);
     const validationErrors = await validate(msg);
     if (validationErrors.length > 0) {
       throw Error(JSON.stringify(validationErrors));

@@ -81,12 +81,12 @@ class WiZLocalControl {
         return this.udpManager.sendUDPCommand(msg, lightIp);
     }
     /**
-     * Switches WiZ Light to demo mode
+     * Changes module name for WiZ Light
      * @param moduleName module name
      * @param lightIp Light IP address
      */
-    async switchToDemoMode(moduleName, lightIp) {
-        const msg = types_1.SetSystemConfigMessage.buildSwitchToDemoModeMessage(moduleName);
+    async setModuleName(moduleName, lightIp) {
+        const msg = types_1.SetSystemConfigMessage.buildSetModuleNameMessage(moduleName);
         const validationErrors = await class_validator_1.validate(msg);
         if (validationErrors.length > 0) {
             throw Error(JSON.stringify(validationErrors));

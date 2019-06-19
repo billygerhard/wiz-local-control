@@ -44,11 +44,11 @@ export default class WiZLocalControl {
      */
     setEnvironment(environment: string, lightIp: string): Promise<Result<any>>;
     /**
-     * Switches WiZ Light to demo mode
+     * Changes module name for WiZ Light
      * @param moduleName module name
      * @param lightIp Light IP address
      */
-    switchToDemoMode(moduleName: string, lightIp: string): Promise<Result<any>>;
+    setModuleName(moduleName: string, lightIp: string): Promise<Result<any>>;
     /**
      * Changes light mode of WiZ Light
      * @param lightMode Light mode, check LightMode type for details

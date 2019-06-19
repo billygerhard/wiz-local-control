@@ -253,9 +253,9 @@ export declare class SetSystemConfigMessage {
      */
     static buildSetEnvironmentMessage(environment: string): SetSystemConfigMessage;
     /**
-     * Constructs switching to demo mode message
+     * Constructs changing of module name message
      */
-    static buildSwitchToDemoModeMessage(moduleName: string): SetSystemConfigMessage;
+    static buildSetModuleNameMessage(moduleName: string): SetSystemConfigMessage;
 }
 /**
  * Update firmware messages parameters for request

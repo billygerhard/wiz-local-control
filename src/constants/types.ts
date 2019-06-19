@@ -516,9 +516,9 @@ export class SetSystemConfigMessage {
     return msg;
   }
   /**
-   * Constructs switching to demo mode message
+   * Constructs changing of module name message
    */
-  static buildSwitchToDemoModeMessage(
+  static buildSetModuleNameMessage(
     moduleName: string,
   ): SetSystemConfigMessage {
     const msg = new SetSystemConfigMessage();
