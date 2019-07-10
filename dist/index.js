@@ -32,6 +32,15 @@ class WiZLocalControl {
         return this.udpManager.sendUDPCommand(msg, lightIp);
     }
     /**
+     * Changes brightness of all connected WiZ Lights
+     * @param brightness Brightness level, 10-100
+     */
+    async changeBrightnessForAllLights(brightness) {
+        const msg = types_2.SetPilotMessage.buildDimmingControlMessage(brightness);
+        await this.validateMsg(msg);
+        return this.udpManager.broadcastUDPMessage(msg);
+    }
+    /**
      * Requests firmware update of WiZ Light
      * @param lightIp Light IP address
      */
@@ -118,6 +127,29 @@ class WiZLocalControl {
         }
     }
     /**
+     * Changes light mode of all connected WiZ Light
+     * @param lightMode Light mode, check LightMode type for details
+     */
+    async changeLightModeForAllLights(lightMode) {
+        switch (lightMode.type) {
+            case "scene": {
+                const msg = types_2.SetPilotMessage.buildSceneControlMessage(lightMode);
+                await this.validateMsg(msg);
+                return this.udpManager.broadcastUDPMessage(msg);
+            }
+            case "color": {
+                const msg = types_2.SetPilotMessage.buildColorControlMessage(lightMode.r, lightMode.g, lightMode.b, lightMode.cw, lightMode.ww);
+                await this.validateMsg(msg);
+                return this.udpManager.broadcastUDPMessage(msg);
+            }
+            case "temperature": {
+                const msg = types_2.SetPilotMessage.buildColorTemperatureControlMessage(lightMode.colorTemperature);
+                await this.validateMsg(msg);
+                return this.udpManager.broadcastUDPMessage(msg);
+            }
+        }
+    }
+    /**
      * Changes light mode of WiZ Light
      * @param lightMode Light mode, check LightMode type for details
      * @param brightness Brightness level, 10-100
@@ -161,6 +193,15 @@ class WiZLocalControl {
         const msg = types_2.SetPilotMessage.buildStatusControlMessage(status);
         await this.validateMsg(msg);
         return this.udpManager.sendUDPCommand(msg, lightIp);
+    }
+    /**
+     * Changes status of all WiZ Lights
+     * @param status Desired status, true - ON, false - OFF
+     */
+    async changeStatusForAllLights(status) {
+        const msg = types_2.SetPilotMessage.buildStatusControlMessage(status);
+        await this.validateMsg(msg);
+        return this.udpManager.broadcastUDPMessage(msg);
     }
     /**
      * Retrieves system configuration for WiZ Device (like FW version)

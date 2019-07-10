@@ -57,6 +57,15 @@ class UDPManager {
         }
         return;
     }
+    async broadcastUDPMessage(msg) {
+        const ip = await ipFunctions_1.getLocalIPAddress(this.interfaceName);
+        const socket = dgram.createSocket("udp4");
+        let actualResult;
+        for (const i of Array(3).keys()) {
+            actualResult = await UDPCommunication_1.default(msg, "255.255.255.255", ip, this.controlUDPPort, true, socket);
+        }
+        return actualResult;
+    }
     async sendUDPCommand(msg, ip) {
         const localIp = await ipFunctions_1.getLocalIPAddress(this.interfaceName);
         return await UDPCommunication_1.default(msg, ip, localIp);

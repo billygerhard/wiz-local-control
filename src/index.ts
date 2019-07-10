@@ -44,6 +44,7 @@ export default class WiZLocalControl {
   async stopListening() {
     await this.udpManager.stopListening();
   }
+
   /**
    * Changes brightness of WiZ Light
    * @param brightness Brightness level, 10-100
@@ -56,6 +57,18 @@ export default class WiZLocalControl {
     const msg = SetPilotMessage.buildDimmingControlMessage(brightness);
     await this.validateMsg(msg);
     return this.udpManager.sendUDPCommand(msg, lightIp);
+  }
+
+  /**
+   * Changes brightness of all connected WiZ Lights
+   * @param brightness Brightness level, 10-100
+   */
+  async changeBrightnessForAllLights(
+    brightness: number,
+  ): Promise<Result<any>> {
+    const msg = SetPilotMessage.buildDimmingControlMessage(brightness);
+    await this.validateMsg(msg);
+    return this.udpManager.broadcastUDPMessage(msg);
   }
 
   /**
@@ -168,6 +181,40 @@ export default class WiZLocalControl {
   }
 
   /**
+   * Changes light mode of all connected WiZ Light
+   * @param lightMode Light mode, check LightMode type for details
+   */
+  async changeLightModeForAllLights(
+    lightMode: LightMode,
+  ): Promise<Result<any>> {
+    switch (lightMode.type) {
+      case "scene": {
+        const msg = SetPilotMessage.buildSceneControlMessage(lightMode);
+        await this.validateMsg(msg);
+        return this.udpManager.broadcastUDPMessage(msg);
+      }
+      case "color": {
+        const msg = SetPilotMessage.buildColorControlMessage(
+          lightMode.r,
+          lightMode.g,
+          lightMode.b,
+          lightMode.cw,
+          lightMode.ww,
+        );
+        await this.validateMsg(msg);
+        return this.udpManager.broadcastUDPMessage(msg);
+      }
+      case "temperature": {
+        const msg = SetPilotMessage.buildColorTemperatureControlMessage(
+          lightMode.colorTemperature,
+        );
+        await this.validateMsg(msg);
+        return this.udpManager.broadcastUDPMessage(msg);
+      }
+    }
+  }
+
+  /**
    * Changes light mode of WiZ Light
    * @param lightMode Light mode, check LightMode type for details
    * @param brightness Brightness level, 10-100
@@ -230,6 +277,16 @@ export default class WiZLocalControl {
     const msg = SetPilotMessage.buildStatusControlMessage(status);
     await this.validateMsg(msg);
     return this.udpManager.sendUDPCommand(msg, lightIp);
+  }
+
+  /**
+   * Changes status of all WiZ Lights
+   * @param status Desired status, true - ON, false - OFF
+   */
+  async changeStatusForAllLights(status: boolean): Promise<Result<any>> {
+    const msg = SetPilotMessage.buildStatusControlMessage(status);
+    await this.validateMsg(msg);
+    return this.udpManager.broadcastUDPMessage(msg);
   }
 
   /**

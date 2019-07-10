@@ -25,6 +25,7 @@ declare class UDPManager {
      * Stops listening
      */
     stopListening(): Promise<void>;
+    broadcastUDPMessage<T extends WiZMessageResponse>(msg: WiZControlMessage): Promise<Result<T>>;
     sendUDPCommand<T extends WiZMessageResponse>(msg: WiZControlMessage, ip: string): Promise<Result<T>>;
     /**
      * Processes incoming message from WiZ device

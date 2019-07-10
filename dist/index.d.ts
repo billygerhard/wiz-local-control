@@ -23,6 +23,11 @@ export default class WiZLocalControl {
      */
     changeBrightness(brightness: number, lightIp: string): Promise<Result<any>>;
     /**
+     * Changes brightness of all connected WiZ Lights
+     * @param brightness Brightness level, 10-100
+     */
+    changeBrightnessForAllLights(brightness: number): Promise<Result<any>>;
+    /**
      * Requests firmware update of WiZ Light
      * @param lightIp Light IP address
      */
@@ -56,6 +61,11 @@ export default class WiZLocalControl {
      */
     changeLightMode(lightMode: LightMode, lightIp: string): Promise<Result<any>>;
     /**
+     * Changes light mode of all connected WiZ Light
+     * @param lightMode Light mode, check LightMode type for details
+     */
+    changeLightModeForAllLights(lightMode: LightMode): Promise<Result<any>>;
+    /**
      * Changes light mode of WiZ Light
      * @param lightMode Light mode, check LightMode type for details
      * @param brightness Brightness level, 10-100
@@ -74,6 +84,11 @@ export default class WiZLocalControl {
      * @param lightIp
      */
     changeStatus(status: boolean, lightIp: string): Promise<Result<any>>;
+    /**
+     * Changes status of all WiZ Lights
+     * @param status Desired status, true - ON, false - OFF
+     */
+    changeStatusForAllLights(status: boolean): Promise<Result<any>>;
     /**
      * Retrieves system configuration for WiZ Device (like FW version)
      * @param lightIp
