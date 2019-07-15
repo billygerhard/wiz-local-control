@@ -27,7 +27,7 @@ export type Scene = {
  * 2. Color - determined by Red, Green, Blue, Cool White, Warm White
  * (0-255). There is a limit on a maximum amount of channels used in the same time:
  * 3 RGB or 2 RGB + 1 White or 2 Whites
- * 3. Color temperature – form color temperature using Cool and Warm white LEDs (2200-6500)
+ * 3. Color temperature – form color temperature using Cool and Warm white LEDs (2000-9000)
  */
 export type LightMode =
   | Scene
@@ -273,8 +273,8 @@ export class SetPilotParametersSpeed {
  */
 export class SetPilotParametersColorTemperatureAndBrightness {
   @IsInt()
-  @Min(2200)
-  @Max(6500)
+  @Min(2000)
+  @Max(9000)
   temp?: number;
   @IsInt()
   @Min(10)
@@ -292,8 +292,8 @@ export class SetPilotParametersColorTemperatureAndBrightness {
  */
 export class SetPilotParametersColorTemperature {
   @IsInt()
-  @Min(2200)
-  @Max(6500)
+  @Min(2000)
+  @Max(9000)
   temp?: number;
 
   constructor(temperature: number) {
@@ -431,7 +431,7 @@ export class SetPilotMessage {
 
   /**
    * Constructs color temperature control message.
-   * @param colorTemperature - Integer, valid range 2200-6500
+   * @param colorTemperature - Integer, valid range 2000-9000
    */
   static buildColorTemperatureControlMessage(colorTemperature: number) {
     const msg = new SetPilotMessage();
@@ -441,7 +441,7 @@ export class SetPilotMessage {
 
   /**
    * Constructs color temperature control message.
-   * @param colorTemperature - Integer, valid range 2200-6500
+   * @param colorTemperature - Integer, valid range 2000-9000
    * @param dimming - Integer, valid range is 10-100
    */
   static buildColorTemperatureAndBrightnessControlMessage(
