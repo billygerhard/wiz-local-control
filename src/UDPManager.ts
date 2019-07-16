@@ -91,11 +91,7 @@ class UDPManager {
   ): Promise<Result<T>> {
     const ip = await getLocalIPAddress(this.interfaceName);
     const socket = dgram.createSocket("udp4");
-    let actualResult: any;
-    for (const i of Array(3).keys()) {
-      actualResult = await sendCommand<T>(msg, "255.255.255.255", ip, this.controlUDPPort, true, socket);
-    }
-    return actualResult;
+    return await sendCommand<T>(msg, "255.255.255.255", ip, this.controlUDPPort, true, socket);
   }
 
   async sendUDPCommand<T extends WiZMessageResponse>(

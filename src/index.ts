@@ -66,9 +66,13 @@ export default class WiZLocalControl {
   async changeBrightnessForAllLights(
     brightness: number,
   ): Promise<Result<any>> {
-    const msg = SetPilotMessage.buildDimmingControlMessage(brightness);
-    await this.validateMsg(msg);
-    return this.udpManager.broadcastUDPMessage(msg);
+    let actualResult: any;
+    for (const i of Array(3).keys()) {
+      const msg = SetPilotMessage.buildDimmingControlMessage(brightness);
+      await this.validateMsg(msg);
+      actualResult = await this.udpManager.broadcastUDPMessage(msg);
+    }
+    return actualResult;
   }
 
   /**
@@ -189,27 +193,39 @@ export default class WiZLocalControl {
   ): Promise<Result<any>> {
     switch (lightMode.type) {
       case "scene": {
-        const msg = SetPilotMessage.buildSceneControlMessage(lightMode);
-        await this.validateMsg(msg);
-        return this.udpManager.broadcastUDPMessage(msg);
+        let actualResult: any;
+        for (const i of Array(3).keys()) {
+          const msg = SetPilotMessage.buildSceneControlMessage(lightMode);
+          await this.validateMsg(msg);
+          actualResult = await this.udpManager.broadcastUDPMessage(msg);
+        }
+        return actualResult;
       }
       case "color": {
-        const msg = SetPilotMessage.buildColorControlMessage(
-          lightMode.r,
-          lightMode.g,
-          lightMode.b,
-          lightMode.cw,
-          lightMode.ww,
-        );
-        await this.validateMsg(msg);
-        return this.udpManager.broadcastUDPMessage(msg);
+        let actualResult: any;
+        for (const i of Array(3).keys()) {
+          const msg = SetPilotMessage.buildColorControlMessage(
+            lightMode.r,
+            lightMode.g,
+            lightMode.b,
+            lightMode.cw,
+            lightMode.ww,
+          );
+          await this.validateMsg(msg);
+          actualResult = await this.udpManager.broadcastUDPMessage(msg);
+        }
+        return actualResult;
       }
       case "temperature": {
-        const msg = SetPilotMessage.buildColorTemperatureControlMessage(
-          lightMode.colorTemperature,
-        );
-        await this.validateMsg(msg);
-        return this.udpManager.broadcastUDPMessage(msg);
+        let actualResult: any;
+        for (const i of Array(3).keys()) {
+          const msg = SetPilotMessage.buildColorTemperatureControlMessage(
+            lightMode.colorTemperature,
+          );
+          await this.validateMsg(msg);
+          actualResult = await this.udpManager.broadcastUDPMessage(msg);
+        }
+        return actualResult;
       }
     }
   }
@@ -284,9 +300,13 @@ export default class WiZLocalControl {
    * @param status Desired status, true - ON, false - OFF
    */
   async changeStatusForAllLights(status: boolean): Promise<Result<any>> {
-    const msg = SetPilotMessage.buildStatusControlMessage(status);
-    await this.validateMsg(msg);
-    return this.udpManager.broadcastUDPMessage(msg);
+    let actualResult: any;
+    for (const i of Array(3).keys()) {
+      const msg = SetPilotMessage.buildStatusControlMessage(status);
+      await this.validateMsg(msg);
+      actualResult = await this.udpManager.broadcastUDPMessage(msg);
+    }
+    return actualResult;
   }
 
   /**
